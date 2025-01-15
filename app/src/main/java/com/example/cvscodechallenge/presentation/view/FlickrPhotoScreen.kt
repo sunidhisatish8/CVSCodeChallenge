@@ -1,5 +1,6 @@
 package com.example.cvscodechallenge.presentation.view
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -81,7 +83,9 @@ fun FetchPhotoDetails(photoDetails: ResponseState<FlickrFeedResponse>) {
         }
 
         is ResponseState.Failed -> {
-            Toast.makeText(context, photoDetails.message, Toast.LENGTH_SHORT).show()
+            LaunchedEffect(photoDetails.message) {
+                Toast.makeText(context, photoDetails.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

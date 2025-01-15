@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,14 +31,11 @@ class FlickrPhotoViewModel @Inject constructor(
             _tagName
                 .debounce(500)
                 .distinctUntilChanged()
+                .filter { it.isNotEmpty() }
                 .collect { newTagName ->
-                    if (newTagName.isNotEmpty()) {
                         _photoDetails.value = ResponseState.Loading()
                         _photoDetails.value = getFlickPhotoFeedUseCase.invoke(newTagName)
-                    } else {
-                        _photoDetails.value = ResponseState.Loading()
                     }
-                }
         }
     }
 }

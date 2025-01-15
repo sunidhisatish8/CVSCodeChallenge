@@ -21,7 +21,7 @@ class Repository @Inject constructor(private val apiService: ApiService) : IRepo
                 ResponseState.Failed("Failed with error code - ${response.code()} and error message - ${response.message()}")
             }
         } catch (networkException: NetworkInterceptor.NoInternetException) {
-            ResponseState.Failed("Failed with the message - ${networkException.message}")
+            ResponseState.Failed(networkException.message)
         } catch (exception: Exception) {
             ResponseState.Failed("Failed with the message - ${exception.message}")
         }
