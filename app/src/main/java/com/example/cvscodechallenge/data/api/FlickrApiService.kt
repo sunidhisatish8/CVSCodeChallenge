@@ -6,7 +6,11 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+/**
+ * Interface for defining the API service used to interact with the Flickr API.
+ * This interface provides a method for fetching a photo feed based on a tag name.
+ */
+interface FlickrApiService {
     @GET(Constants.END_POINT)
     suspend fun getFlickrPhotoFeed(
         @Query("format") formatType: String = "json",

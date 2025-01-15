@@ -17,7 +17,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.cvscodechallenge.HiltTestRunner"
+        manifestPlaceholders["applicationName"] = "com.example.cvscodechallenge.MyApp"
     }
 
     buildTypes {
@@ -77,6 +78,12 @@ dependencies {
     //glide
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    // Hilt Testing Dependencies
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
+    testImplementation("com.google.dagger:hilt-android-testing:2.48")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:2.48")
+    kaptTest("com.google.dagger:hilt-compiler:2.48")
+
     //mockk
     testImplementation("io.mockk:mockk:1.13.12")
 
@@ -85,5 +92,4 @@ dependencies {
 
     //coroutines test
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
-
 }

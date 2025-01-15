@@ -1,6 +1,6 @@
 package com.example.cvscodechallenge.presentation.view
 
-import android.util.Log
+import android.text.Html
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.cvscodechallenge.data.model.FlickrFeedResponse
-import com.example.cvscodechallenge.data.model.Item
+import com.example.cvscodechallenge.data.model.PhotoItem
 import com.example.cvscodechallenge.presentation.viewModel.FlickrPhotoViewModel
 import com.example.cvscodechallenge.utils.ResponseState
 import com.example.cvscodechallenge.utils.formatDate
@@ -51,6 +51,13 @@ fun FlickrPhotoScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        Text(
+            text = "Flickr Feed Photos",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        )
         SearchQueryChange(
             tagName,
             onSearchQuery = { flickrPhotoViewModel.fetchFlickrPhotoDetails(it) }
@@ -94,11 +101,11 @@ fun FetchPhotoDetails(photoDetails: ResponseState<FlickrFeedResponse>) {
 @Composable
 fun FetchSearchResult(flickrFeedResponse: FlickrFeedResponse) {
     var showBottomSheet by remember { mutableStateOf(false) }
-    var selectedPhotos by remember { mutableStateOf<Item?>(null) }
+    var selectedPhotos by remember { mutableStateOf<PhotoItem?>(null) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LazyColumn {
-            items(flickrFeedResponse.items) { photoItem ->
+            items(flickrFeedResponse.photoItems) { photoItem ->
                 GlideImage(
                     model = photoItem.media.image,
                     contentDescription = "Flickr images",
@@ -140,7 +147,7 @@ fun FetchSearchResult(flickrFeedResponse: FlickrFeedResponse) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             Text(
-                text = "Description: ${selectedPhotos?.description}",
+                text = "Description: ${Html.fromHtml(selectedPhotos?.description ?: "", Html.FROM_HTML_MODE_COMPACT)}",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )

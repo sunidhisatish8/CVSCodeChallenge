@@ -2,7 +2,7 @@ package com.example.cvscodechallenge.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class PhotoItem(
     val author: String,
     @SerializedName("author_id")
     val authorId: String,

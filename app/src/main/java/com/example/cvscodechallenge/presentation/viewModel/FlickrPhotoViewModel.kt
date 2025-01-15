@@ -14,6 +14,12 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for managing the state of the Flickr photo feed screen.
+ * It handles the logic of fetching the photo feed details based on the tag name input.
+ *
+ * @param getFlickPhotoFeedUseCase The use case that fetches the Flickr photo feed data.
+ */
 @HiltViewModel
 class FlickrPhotoViewModel @Inject constructor(
     private val getFlickPhotoFeedUseCase: GetFlickPhotoFeedUseCase
@@ -33,9 +39,13 @@ class FlickrPhotoViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .filter { it.isNotEmpty() }
                 .collect { newTagName ->
-                        _photoDetails.value = ResponseState.Loading()
+                    _photoDetails.value = ResponseState.Loading()
+                    try {
                         _photoDetails.value = getFlickPhotoFeedUseCase.invoke(newTagName)
+                    } catch (exception : Exception){
+                        _photoDetails.value = ResponseState.Failed(exception.message)
                     }
+                }
         }
     }
 }

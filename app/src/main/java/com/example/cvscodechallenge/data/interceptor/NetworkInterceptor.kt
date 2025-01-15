@@ -9,6 +9,12 @@ import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * A network interceptor that checks for an active internet connection before allowing a network request to proceed.
+ * If there is no internet connection, it throws a `NoInternetException`.
+ *
+ * @param context The application context used to check the network availability.
+ */
 class NetworkInterceptor @Inject constructor(@ApplicationContext private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isInternetAvailable(context)) {

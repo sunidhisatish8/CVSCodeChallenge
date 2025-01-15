@@ -1,6 +1,6 @@
 package com.example.cvscodechallenge.di
 
-import com.example.cvscodechallenge.data.api.ApiService
+import com.example.cvscodechallenge.data.api.FlickrApiService
 import com.example.cvscodechallenge.data.interceptor.NetworkInterceptor
 import com.example.cvscodechallenge.data.model.Constants
 import dagger.Module
@@ -13,6 +13,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * Network module that provides network-related dependencies such as HttpLoggingInterceptor, OkHttpClient,
+ * Retrofit instance, and ApiService for network communication.
+*/
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -52,7 +56,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): FlickrApiService {
+        return retrofit.create(FlickrApiService::class.java)
     }
 }

@@ -23,9 +23,9 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class FlickrViewModelTest {
+
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
-
     private lateinit var flickrPhotoViewModel: FlickrPhotoViewModel
     private lateinit var getFlickPhotoFeedUseCase: GetFlickPhotoFeedUseCase
     private val testDispatcher = StandardTestDispatcher()
@@ -44,7 +44,7 @@ class FlickrViewModelTest {
             title = "Mock Title",
             description = "Mock Description",
             link = "Mock Link",
-            items = emptyList(),
+            photoItems = emptyList(),
             modified = "Mock modified",
             generator = "Mock generator"
         )
@@ -64,7 +64,7 @@ class FlickrViewModelTest {
     }
 
     @Test
-    fun `verify if error is handled correctly`() = runTest {
+    fun `verify if the network error is handled correctly`() = runTest {
         val mockTagName = "porcupine"
         val mockError = Exception("Network error")
 
